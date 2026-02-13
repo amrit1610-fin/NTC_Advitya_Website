@@ -39,6 +39,15 @@ export async function POST(request: Request) {
             }
         }
 
+        // Check if environment variables are set
+        if (!process.env.POSTGRES_URL) {
+            console.error('Database configuration error: POSTGRES_URL is missing')
+            return NextResponse.json(
+                { error: 'Server configuration error. Please check environment variables.' },
+                { status: 500 }
+            )
+        }
+
         // Create tables if they don't exist
         await sql`
       CREATE TABLE IF NOT EXISTS teams (
@@ -96,10 +105,20 @@ export async function POST(request: Request) {
             { status: 201 }
         )
 
-    } catch (error) {
-        console.error('Registration error:', error)
+    } catch (error: any) {
+        console.error('Registration error details:', {
+            message: error.message,
+            code: error.code,
+            stack: error.stack
+        })
+        
+        // Return a more descriptive error message if it's a known database error
+        const errorMessage = error.message?.includes('relation') ? 
+            'Database table error. Please ensure tables are created.' : 
+            'Failed to register team. Please check server logs for details.';
+
         return NextResponse.json(
-            { error: 'Failed to register team. Please try again.' },
+            { error: errorMessage, details: error.message },
             { status: 500 }
         )
     }

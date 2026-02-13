@@ -129,13 +129,20 @@ If you need to manually add environment variables:
 1. Go to project Settings
 2. Click "Environment Variables"
 3. Add the following (if not auto-added by database):
-   - `POSTGRES_URL`
-   - `POSTGRES_PRISMA_URL`
-   - `POSTGRES_URL_NON_POOLING`
-   - `POSTGRES_USER`
-   - `POSTGRES_HOST`
-   - `POSTGRES_PASSWORD`
    - `POSTGRES_DATABASE`
+
+### Using Supabase Postgres
+
+If you are using Supabase instead of Vercel's built-in Postgres:
+
+1. Go to your **Supabase Project Settings** > **Database**.
+2. Find the **Connection string** section and select **URI**.
+3. Copy the URI (it starts with `postgres://...`).
+4. In your **Vercel Project Settings** > **Environment Variables**, add:
+   - Key: `POSTGRES_URL`
+   - Value: `[Paste your Supabase URI here]`
+5. **Important**: If you see an SSL error, append `?sslmode=require` to the end of your `POSTGRES_URL`.
+6. Redeploy your project for the changes to take effect.
 
 ## Troubleshooting
 
