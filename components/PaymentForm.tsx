@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 interface PaymentFormProps {
     teamId: string
@@ -167,11 +168,14 @@ export default function PaymentForm({ teamId, teamName }: PaymentFormProps) {
                         <label htmlFor="payment-screenshot" className="cursor-pointer">
                             {previewUrl ? (
                                 <div className="space-y-4">
-                                    <img
-                                        src={previewUrl}
-                                        alt="Payment screenshot preview"
-                                        className="max-h-64 mx-auto rounded-lg border-2 border-green-200"
-                                    />
+                                    <div className="relative h-64 w-full">
+                                        <Image
+                                            src={previewUrl}
+                                            alt="Payment screenshot preview"
+                                            fill
+                                            className="object-contain rounded-lg border-2 border-green-200"
+                                        />
+                                    </div>
                                     <p className="text-sm text-gray-600">
                                         {selectedFile?.name} ({(selectedFile!.size / 1024).toFixed(2)} KB)
                                     </p>

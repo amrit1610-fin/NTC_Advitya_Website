@@ -310,7 +310,7 @@ export default function RegistrationForm() {
                 </button>
 
                 <p className="text-gray-600 text-sm text-center mt-4">
-                    By registering, you agree to participate in Seize the Summit '26
+                    By registering, you agree to participate in Seize the Summit &apos;26
                 </p>
             </form>
         </motion.div>
